@@ -3,7 +3,7 @@
 	-which features do not matter?
 	-which features are essential?
 -associate an object with a set of features
--import a picture from phone to picture library and give it a classification
+-import a picture of an object on a plain background from phone to picture library and give it a classification
 -select an image on phone to be classified
 -reject the application's classification
 	-enter custom classification
@@ -17,5 +17,13 @@
 	-manual classifications in black
 	-generated classifications in green
 
-week 1: -take all features of an object and determine which are most important to identify it
-		-start implementing the neural network
+-find a tutorial on building a simple neural network
+-implement a simple neural network as proof of concept
+-explore alternate methods of machine learning besides neural networks
+
+
+week 1: -find a tutorial on building a simple neural network
+	-implement a simple neural network as proof of concept
+	-explore alternate methods of machine learning besides neural networks
+
+	
