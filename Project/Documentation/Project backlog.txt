@@ -19,11 +19,20 @@
 
 -find a tutorial on building a simple neural network
 -implement a simple neural network as proof of concept
--explore alternate methods of machine learning besides neural networks
+$explore alternate methods of machine learning besides neural networks
 
 
 week 1: -find a tutorial on building a simple neural network
 	-implement a simple neural network as proof of concept
-	-explore alternate methods of machine learning besides neural networks
+	$explore alternate methods of machine learning besides neural networks
 
+week 2: Target:
+	-implement a simple Naive Bayes Classifier as proof of concept
+	-implement a simple Random Forest as proof of concept
+
+	Stretch:
+	-import a picture of an object on a plain background from phone to picture library and give it a classification
+	-modify pictures in library
+		-change classification
+		-remove picture and classification
 	
