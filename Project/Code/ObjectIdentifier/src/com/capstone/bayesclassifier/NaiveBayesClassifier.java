@@ -33,4 +33,57 @@ public class NaiveBayesClassifier<F, C> {
 	}
 	
 	
+	/**
+	 * Increments count of feature in category. Feature observed for category
+	 * @param feature
+	 * @param category
+	 */
+	public void featureOccurredInCategory(F feature, C category){
+		//get feature occurrences for category
+		Dictionary<F, Integer> features = featureCountPerCategory.get(category);
+		
+		if(features == null){
+			featureCountPerCategory.put(category, new Hashtable<F, Integer>());
+			features = featureCountPerCategory.get(category);
+		}
+		
+		//get feature count
+		Integer count = features.get(feature);
+		
+		if(count == null){
+			features.put(feature,0);
+			count = features.get(feature);
+		}
+		
+		//increment count of feature in category
+		features.put(feature, ++count);
+		
+		//how many times does feature occur overall?
+		Integer totalFeatureCount = featureOccurrence.get(feature);
+		
+		if(totalFeatureCount == null){
+			featureOccurrence.put(feature, 0);
+			totalFeatureCount = featureOccurrence.get(feature);
+		}
+		
+		//increment overall feature count
+		featureOccurrence.put(feature, ++totalFeatureCount);
+	}
+	
+	/**
+	 * Increments count of category. Category observed
+	 * @param category
+	 */
+	public void categoryOccurred(C category){
+		//get category count
+		Integer categoryCount = categoryOccurrence.get(category);
+		
+		if(categoryCount == null){
+			categoryOccurrence.put(category, 0);
+			categoryCount = categoryOccurrence.get(category);
+		}
+		
+		//increment count of category
+		categoryOccurrence.put(category, ++categoryCount);
+	}
 }
