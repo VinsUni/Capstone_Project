@@ -86,4 +86,49 @@ public class NaiveBayesClassifier<F, C> {
 		//increment count of category
 		categoryOccurrence.put(category, ++categoryCount);
 	}
+	
+	/**
+	 * Returns num occurrences of feature in category
+	 * @param feature
+	 * @param category
+	 * @return
+	 */
+	public int featureOccurrenceInCategory(F feature, C category){
+		//get feature occurrences for a category
+		Dictionary<F, Integer> features = featureCountPerCategory.get(category);
+		int numFeatureOccurrences;
+		
+		if(features == null)
+			numFeatureOccurrences = 0;
+		else numFeatureOccurrences = features.get(feature).intValue();
+		
+		return numFeatureOccurrences;
+	}
+	
+	/**
+	 * Returns num occurrences of category
+	 * @param category
+	 * @return
+	 */
+	public int categoryOccurrence(C category){
+		Integer numCategoryOccurrence = categoryOccurrence.get(category);
+		return (numCategoryOccurrence == null) ? 0 : numCategoryOccurrence.intValue();
+	}
+	
+	/**
+	 * return probability of category given feature
+	 * @param feature
+	 * @param category
+	 * @return
+	 */
+	public double featureProbability(F feature, C category){
+		double probabilityCategoryGivenFeature;
+		
+		if(categoryOccurrence(category) == 0)
+			probabilityCategoryGivenFeature = 0;
+		else probabilityCategoryGivenFeature = 
+				(double)featureOccurrenceInCategory(feature, category)/(double)categoryOccurrence(category);
+		
+		return probabilityCategoryGivenFeature;
+	}
 }
