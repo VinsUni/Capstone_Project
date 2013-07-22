@@ -1,3 +1,8 @@
+$ indicates completed tasks
+- indicates imcomplete tasks
+
+
+
 -manually associate a classification with an object
 -take all features of an object and determine which are most important to identify it
 	-which features do not matter?
@@ -36,3 +41,13 @@ week 2: Target:
 		-change classification
 		-remove picture and classification
 	
+week 3:
+	Target:
+	-finish implementing simple Naive Bayes classifier
+	-implement simple Random Forest classifier
+	-import picture of an object on a plain background from phone to picture library and give it a classification
+
+	Stretch:
+	-modify pictures in library
+		-change classification
+		-remove picture and classification
