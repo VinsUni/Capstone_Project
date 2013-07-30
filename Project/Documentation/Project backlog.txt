@@ -25,7 +25,9 @@ $ indicates completed tasks
 -find a tutorial on building a simple neural network
 -implement a simple neural network as proof of concept
 $explore alternate methods of machine learning besides neural networks
-
+-segment image into small (4X4 pixel blocks)
+-extract feature vector from each block
+-give image a classification from feature vectors using bayesian probability
 
 week 1: -find a tutorial on building a simple neural network
 	-implement a simple neural network as proof of concept
@@ -51,3 +53,10 @@ week 3:
 	-modify pictures in library
 		-change classification
 		-remove picture and classification
+
+week 4:
+	Target:
+	-segment image into small (4X4 pixel blocks)
+	-extract feature vector from each block
+	-implement Naive Bayes classifier
+	-give image a classification from feature vectors using bayesian probability
