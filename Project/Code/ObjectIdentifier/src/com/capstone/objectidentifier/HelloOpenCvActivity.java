@@ -7,52 +7,26 @@ import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
+import org.opencv.highgui.Highgui;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
-public class HelloOpenCvActivity extends Activity implements CvCameraViewListener2 {
-
-	protected static final String TAG = null;
-	private CameraBridgeViewBase mOpenCvCameraView;
+public class HelloOpenCvActivity extends Activity{
 	
 	@Override
 	 public void onCreate(Bundle savedInstanceState) {
-	     Log.i(TAG, "called onCreate");
 	     super.onCreate(savedInstanceState);
-	     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 	     setContentView(R.layout.hello_open_cv_layout);
-	     mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.HelloOpenCvView);
-	     mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
-	     mOpenCvCameraView.setCvCameraViewListener(this);
-	 }
-	
-	@Override
-	 public void onPause()
-	 {
-	     super.onPause();
-	     if (mOpenCvCameraView != null)
-	         mOpenCvCameraView.disableView();
-	 }
-	
-	 public void onDestroy() {
-	     super.onDestroy();
-	     if (mOpenCvCameraView != null)
-	         mOpenCvCameraView.disableView();
-	 }
-	 
-	 public void onCameraViewStarted(int width, int height) {
-	 }
-	
-	 public void onCameraViewStopped() {
-	 }
-	
-	 public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
-	     return inputFrame.rgba();
+	     
+	     if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_2, this, mOpenCVCallBack)){
+	         Log.e("TEST", "Cannot connect to OpenCV Manager");
+	     }
 	 }
 	 
 	@Override
@@ -61,28 +35,25 @@ public class HelloOpenCvActivity extends Activity implements CvCameraViewListene
 		getMenuInflater().inflate(R.menu.hello_open_cv, menu);
 		return true;
 	}
-
-	private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+	
+	private BaseLoaderCallback  mOpenCVCallBack = new BaseLoaderCallback(this) {
 	    @Override
 	    public void onManagerConnected(int status) {
 	        switch (status) {
-	            case LoaderCallbackInterface.SUCCESS:
-	            {
-	                Log.i(TAG, "OpenCV loaded successfully");
-	                mOpenCvCameraView.enableView();
-	            } break;
-	            default:
-	            {
-	                super.onManagerConnected(status);
-	            } break;
-	        }
+	                case LoaderCallbackInterface.SUCCESS:
+	                {
+		           	     Mat img = Highgui.imread("/images/red.jpg");
+		        	     AlertDialog ad = new AlertDialog.Builder(HelloOpenCvActivity.this).create();
+		        	     if(img == null){
+		        	    	 ad.setMessage("Can't open image file!");
+		        	     }
+		        	     else ad.setMessage("Successfully read image file!");
+	                } break;
+	                default:
+	                {
+	                    super.onManagerConnected(status);
+	                } break;
+	            }
 	    }
-	};
-
-	@Override
-	public void onResume()
-	{
-	    super.onResume();
-	    OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_6, this, mLoaderCallback);
-	}
+    };
 }
