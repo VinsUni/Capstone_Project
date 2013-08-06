@@ -2,24 +2,24 @@ package com.capstone.bayesclassifier;
 
 public class Classification<F, C> {
 	
-	private F[][] features;
+	private F featureVector;
 	private C category;
 	private double probability;
 	
-	public Classification(F[][] features, C category){
-		this.features = features;
+	public Classification(F features, C category){
+		this.featureVector = features;
 		this.category = category;
 		probability = 1.0;
 	}
 	
-	public Classification(F[][] features, C category, double probability){
-		this.features = features;
+	public Classification(F features, C category, double probability){
+		this.featureVector = features;
 		this.category = category;
 		this.probability = probability;
 	}
 	
-	public F[][] getFeatures(){
-		return features;
+	public F getFeatureVector(){
+		return featureVector;
 	}
 	
 	public C getCategory(){

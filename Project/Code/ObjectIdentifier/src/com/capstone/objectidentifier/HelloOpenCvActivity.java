@@ -1,5 +1,8 @@
 package com.capstone.objectidentifier;
 
+import java.io.File;
+import java.net.URL;
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
@@ -16,6 +19,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class HelloOpenCvActivity extends Activity{
 	
@@ -42,12 +47,23 @@ public class HelloOpenCvActivity extends Activity{
 	        switch (status) {
 	                case LoaderCallbackInterface.SUCCESS:
 	                {
-		           	     Mat img = Highgui.imread("/images/red.jpg");
-		        	     AlertDialog ad = new AlertDialog.Builder(HelloOpenCvActivity.this).create();
-		        	     if(img == null){
-		        	    	 ad.setMessage("Can't open image file!");
+	                	 URL url = HelloOpenCvActivity.this.getClass().getResource("Hydrangeas.jpg");
+	                	 String imgPath = url.getPath();
+	                	 if(imgPath.startsWith("/")){
+	                		 imgPath = imgPath.substring(1);
+	                	 }
+		           	     Mat img = Highgui.imread(imgPath,1);
+		           	     LinearLayout layout = (LinearLayout) findViewById(R.id.myLayout);
+		        	     TextView txt = new TextView(HelloOpenCvActivity.this);
+		        	     layout.addView(txt);
+		        	     if(img.empty()){
+		        	    	 txt.setText("Can't open image file!");
 		        	     }
-		        	     else ad.setMessage("Successfully read image file!");
+		        	     else{
+		        	    	 ImageBlocks blocks = new ImageBlocks(img);
+		        	    	 txt.setText("Successfully read image file! The image contains " +
+		        	    	 		+ blocks.getNumBlocks() + " 4X4 pixel blocks.");
+		        	     }
 	                } break;
 	                default:
 	                {

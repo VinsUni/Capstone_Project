@@ -4,7 +4,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Set;
 
-public class NaiveBayesClassifier<F, C> {
+public class NaiveBayesClassifier<F, C> implements IFeatureProbability<F,C>{
 	//map features to num occurrences in each category
 	private Dictionary<C, Dictionary<F, Integer>> featureCountPerCategory;
 	
@@ -132,5 +132,61 @@ public class NaiveBayesClassifier<F, C> {
 		return probabilityCategoryGivenFeature;
 	}
 	
+	/**
+	 * Calculates probability of feature given category with weight 1 and 
+	 * assumed probability .5
+	 * @param feature
+	 * @param category
+	 * @return
+	 */
+	public double featureWeightedAverage(F feature, C category){
+		return featureWeightedAverage(feature, category, null, 1.0, .5);
+	}
 	
+	/**
+	 * Calculates probability of feature given category with weight 1
+	 * and assumed probability .5 and uses calculator for probability calculation
+	 * @param feature
+	 * @param category
+	 * @param calculator
+	 * @return
+	 */
+	public double featureWeightedAverage(F feature, C category, IFeatureProbability<F,C> calculator){
+		return featureWeightedAverage(feature,category,calculator,1.0,.5);
+	}
+	
+	/**
+	 * Calculates probability of feature given category with given weight
+	 * and assumed probability .5 and uses calculator for probability calculation
+	 * @param feature
+	 * @param category
+	 * @param calculator
+	 * @param weight
+	 * @return
+	 */
+	public double featureWeightedAverage(F feature, C category, IFeatureProbability<F,C> calculator, double weight){
+		return featureWeightedAverage(feature, category, calculator, weight, .5);
+	}
+	
+	/**
+	 * Calculates probability of feature given category with given weight, given
+	 * assumed probability and uses calculator for probability calculation
+	 * @param feature
+	 * @param category
+	 * @param calculator
+	 * @param weight
+	 * @param assumedProbability
+	 * @return
+	 */
+	public double featureWeightedAverage(F feature, C category, IFeatureProbability<F,C> calculator, double weight, double assumedProbability){
+		//uses given calculator or default method to calculate probability that given feature occurred in given category
+		double basicProbability = (calculator==null) ? this.featureProbability(feature,category)
+				: calculator.featureProbability(feature, category);
+		
+		Integer totals = featureOccurrence.get(feature);
+		
+		if(totals == null)
+			totals = 0;
+		return (weight * assumedProbability + totals * basicProbability)/(weight + totals);
+	}
 }
