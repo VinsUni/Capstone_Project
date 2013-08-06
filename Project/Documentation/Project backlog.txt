@@ -56,7 +56,15 @@ week 3:
 
 week 4:
 	Target:
-	-segment image into small (4X4 pixel blocks)
-	-extract feature vector from each block
+	$segment image into small (4X4 pixel blocks)
+	$extract feature vector from each block
 	-implement Naive Bayes classifier
 	-give image a classification from feature vectors using bayesian probability
+
+week 5:
+	Target: 
+	-give image a classification from feature vectors using bayesian probability
+	-create unit tests
+	-take all features of an object and determine which are most important to identify it
+		-which features do not matter?
+		-which features are essential?
