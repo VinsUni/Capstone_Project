@@ -68,3 +68,10 @@ week 5:
 	-take all features of an object and determine which are most important to identify it
 		-which features do not matter?
 		-which features are essential?
+
+Week 6:
+	Target:
+	-Finish classifyier on 8x8 image
+		-generate feature vectors
+	-unit tests
+	-look at larger, more complex images
