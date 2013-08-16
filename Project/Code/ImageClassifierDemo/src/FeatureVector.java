@@ -1,28 +1,54 @@
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 
 public class FeatureVector {
-	private int[][] pixels;
+	private Color[][] pixels;
 	private double percentPixelsSameColor;
 	private int numEdgePixels;
 	
 	public FeatureVector(BufferedImage img){
-		pixels = new int[8][8];
-		int sumPixelsSameColor = 0;
+		percentPixelsSameColor = 0.0;
 		numEdgePixels = 0;
+		
+		pixels = new Color[8][8];
 		
 		for(int x = 0; x < 8; x++){
 			for(int y = 0; y < 8; y++){
-				pixels[x][y] = img.getRGB(x,y);
-				if(pixels[x][y] != -1){
-					sumPixelsSameColor++;
+				pixels[x][y] = new Color(img.getRGB(x,y));
+			}
+		}
+		
+		findPercentPixelsNotWhite();
+		findNumEdgePixels();
+	}
+	
+	private void findPercentPixelsNotWhite(){
+		int totalWhitePixels = 0;
+		
+		for(int x = 0; x < pixels.length; x++){
+			for(int y = 0; y < pixels[x].length; y++){				
+				if(isPixelWhite(pixels[x][y]))
+					totalWhitePixels++;
+			}
+		}
+		
+		percentPixelsSameColor = (64-totalWhitePixels)/64.0;
+	}
+	
+	private void findNumEdgePixels(){
+		for(int x = 0; x < pixels.length; x++){
+			for(int y = 0; y < pixels[x].length; y++){
+				if(!isPixelWhite(pixels[x][y])){
 					if(isEdgePixel(x,y))
 						numEdgePixels++;
 				}
 			}
 		}
-		
-		percentPixelsSameColor = sumPixelsSameColor/64.0;	
+	}
+	
+	private boolean isPixelWhite(Color pixel){
+		return (pixel.getRed() == 255 && pixel.getGreen() == 255 && pixel.getBlue() == 255);
 	}
 	
 	public double getPercentPixelsSameColor(){
@@ -44,13 +70,16 @@ public class FeatureVector {
 	
 	private boolean isEdgePixel(int x, int y){
 		boolean isEdge = false;
-		if(x > 0 && pixels[x-1][y] == -1)
+		
+		if(x == 0 || y == 0 || x == 7 || y == 7)
 			isEdge = true;
-		else if(x < 7 && pixels[x+1][y] == -1)
+		else if(x > 0 && isPixelWhite(pixels[x-1][y]))
 			isEdge = true;
-		else if(y > 0 && pixels[x][y-1] == -1)
+		else if(x < 7 && isPixelWhite(pixels[x+1][y]))
 			isEdge = true;
-		else if(y < 7 && pixels[x][y+1] == -1)
+		else if(y > 0 && isPixelWhite(pixels[x][y-1]))
+			isEdge = true;
+		else if(y < 7 && isPixelWhite(pixels[x][y+1]))
 			isEdge = true;
 		return isEdge;
 		

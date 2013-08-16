@@ -24,8 +24,7 @@ public class MainClass {
    	    FeatureVector square3Vector = new FeatureVector(square3);
    	    FeatureVector flagVector = new FeatureVector(flag);
    	    FeatureVector lineVector = new FeatureVector(line);
-   	    System.out.println(square1Vector.getNumEdgePixels());
-   	    System.out.println(square3Vector.getNumEdgePixels());
+   	    
    	    if(square1Vector.compareTo(square2Vector) == 0)
    	    	System.out.println("Square1 and Square2 are the same object.");
    	    else System.out.println("Square1 and Square2 are not the same object.");
@@ -41,5 +40,9 @@ public class MainClass {
    	    if(square1Vector.compareTo(lineVector) == 0)
 	    	System.out.println("Square1 and Line are the same object.");
 	    else System.out.println("Square1 and Line are not the same object.");
+   	    
+   	    if(flagVector.compareTo(lineVector) == 0)
+	    	System.out.println("Flag and Line are the same object.");
+	    else System.out.println("Flag and Line are not the same object.");
 	}
 }
