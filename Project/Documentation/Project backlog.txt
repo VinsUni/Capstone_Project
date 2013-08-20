@@ -71,7 +71,16 @@ week 5:
 
 Week 6:
 	Target:
-	-Finish classifyier on 8x8 image
+	$Finish classifyier on 8x8 image
 		-generate feature vectors
-	-unit tests
-	-look at larger, more complex images
+	$unit tests
+	$look at larger, more complex images
+Week 7:
+	Target:
+	-Research how shape of object correlates to percent whitespace
+	-Find shape of an object using bounding box statistics
+	-Classify objects by shape and color
+		-for now basketball = orange
+	
+	Stretch:
+	-Research other ways to distinguish objects besides shape and color
