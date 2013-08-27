@@ -1,28 +1,48 @@
 package com.capstone.objectidentifier;
 
-import java.io.File;
-import java.net.URL;
-
 import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
-import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Size;
 import org.opencv.highgui.Highgui;
-
-import android.os.Bundle;
+import org.opencv.imgproc.Imgproc;
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.SurfaceView;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class HelloOpenCvActivity extends Activity{
+	
+	private void edgeDetection(){
+		//get color image
+		Mat colored = Highgui.imread("apple.jpg",Highgui.CV_LOAD_IMAGE_COLOR);
+		
+		//convert image to grayscale
+		Mat gray = new Mat(colored.size(), CvType.CV_8U);
+		
+		Imgproc.cvtColor(colored,gray,Imgproc.COLOR_BGR2GRAY);
+		
+		//smooth image
+		Mat smooth = new Mat(colored.size(), CvType.CV_8U);
+		Imgproc.GaussianBlur(gray,smooth,new Size(9,9),2,2);
+		
+		Imgproc.threshold(gray,gray,155,255,Imgproc.THRESH_BINARY);
+		
+		//Detect edges
+		int N = 7;
+		int aperature_size = N;
+		double lowThresh = 20;
+		double highThresh = 40;
+		Mat edges = new Mat();
+		
+		Imgproc.Canny(gray,edges,lowThresh*N*N,highThresh*N*N,aperature_size,false);
+		Highgui.imwrite("appleEdges.jpg",edges);
+		
+	}
 	
 	@Override
 	 public void onCreate(Bundle savedInstanceState) {
@@ -47,23 +67,13 @@ public class HelloOpenCvActivity extends Activity{
 	        switch (status) {
 	                case LoaderCallbackInterface.SUCCESS:
 	                {
-	                	 URL url = HelloOpenCvActivity.this.getClass().getResource("Hydrangeas.jpg");
-	                	 String imgPath = url.getPath();
-	                	 if(imgPath.startsWith("/")){
-	                		 imgPath = imgPath.substring(1);
-	                	 }
-		           	     Mat img = Highgui.imread(imgPath,1);
 		           	     LinearLayout layout = (LinearLayout) findViewById(R.id.myLayout);
 		        	     TextView txt = new TextView(HelloOpenCvActivity.this);
 		        	     layout.addView(txt);
-		        	     if(img.empty()){
-		        	    	 txt.setText("Can't open image file!");
-		        	     }
-		        	     else{
-		        	    	 ImageBlocks blocks = new ImageBlocks(img);
-		        	    	 txt.setText("Successfully read image file! The image contains " +
-		        	    	 		+ blocks.getNumBlocks() + " 4X4 pixel blocks.");
-		        	     }
+		        	     
+		        	     txt.setText("Processing Image...");
+	                	edgeDetection();
+	                	txt.setText("Done");
 	                } break;
 	                default:
 	                {
