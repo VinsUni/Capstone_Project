@@ -77,10 +77,16 @@ Week 6:
 	$look at larger, more complex images
 Week 7:
 	Target:
-	-Research how shape of object correlates to percent whitespace
+	$Research how shape of object correlates to percent whitespace
 	-Find shape of an object using bounding box statistics
 	-Classify objects by shape and color
 		-for now basketball = orange
 	
 	Stretch:
 	-Research other ways to distinguish objects besides shape and color
+
+week 8:
+	Target:
+	-Fix edge detection using canny algorithm
+	-use edge detector to get shape context of object
+	
